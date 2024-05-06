@@ -1,63 +1,105 @@
+<!-- ref 関数を import して textInput 変数を定義します。ref 関数の引数には初期値を設定することができます。初期値にはブランクが設定されています。-->
 <script setup>
 import { ref } from 'vue'
 
-// refを使用して変数を定義
-const count = ref(2) // countという変数を定義し、初期値を2に設定する
-const count2 = ref(4) // count2という変数を定義し、初期値を4に設定する
-const count3 = ref(0) // count3という変数を定義し、初期値を0に設定する
-const count4 = ref(0) // count4という変数を定義し、初期値を0に設定する
-const count5 = ref(0) // count5という変数を定義し、初期値を0に設定する
-const count6 = ref(0) // count6という変数を定義し、初期値を0に設定する
+// 入力欄に初期値として表示するための textInput 変数を ref 関数を使って定義します。
+const textInput = ref('初期値はここに入れておく')
 
-// カウントアップの関数
-function countUp() {
-  count4.value++ // count4の値を1増やす
+// チェックボックスのプロパティは真偽値を取るので、初期値を true とします。
+const checkValue = ref(true)
+
+// チェックがされている場合は "はい"、されていない場合は "いいえ" が表示されます。
+const checkValue1 = ref('はい')
+
+// ラグビー、サッカー、バスケットボールのチェックボックスの初期値は空の配列です。
+const checkValue2 = ref([])
+
+// 初期値として "野球" を持つ配列を定義します。この値はチェックボックスの選択に影響しません。
+const checkValue2A = ref(['野球'])
+
+// ラジオボタンの初期値は空です。
+const radioValue3 = ref('')
+
+// セレクトボックスの初期値は空です。
+const selectValue = ref('')
+
+// マルチセレクトボックスの初期値は空の配列です。
+const selectValues = ref([])
+
+// ファイルのデータを保持するための変数であり、ファイルの内容を監視し、変更があった場合に Vue コンポーネントの再レンダリングをトリガーします。
+const fileData = ref('')
+
+// ファイルのデータを処理するための handleFile メソッドを定義します。
+const handleFile = (event) => {
+  // event オブジェクトからファイルを取得します。
+  const file = event.target.files[0]
+  // fileData の値を選択されたファイルに設定します。
+  fileData.value = file
 }
-
-// イベントオブジェクトを受け取り、count6の値を更新する関数
-function countUp2(event, times) {
-  count6.value = event.clientX * times // イベントのX座標と引数の値(times)を掛けた結果でcount6の値を更新する
-}
-
-// メッセージ、Vue.jsのURL、IDを定義
-const message = ref('<h1>Hello</h1>') // messageという変数を定義し、初期値を'<h1>Hello</h1>'に設定する
-const vueURL = ref('https://vuejs.org') // vueURLという変数を定義し、初期値を'https://vuejs.org'に設定する
-const vueId = ref('vue-link') // vueIdという変数を定義し、初期値を'vue-link'に設定する
 </script>
 
+<!-- Vue.js のディレクティブを使って双方向バインディングを実現します。 -->
 <template>
-  <div>{{ count + count2 }}</div>
-  <!-- countとcount2の値を足して表示する -->
-  <div v-text="count"></div>
-  <!-- countの値を表示する -->
-  <div>{{ count > 3 ? 'Yes' : 'No' }}</div>
-  <!-- countの値が3より大きい場合は'Yes'、そうでない場合は'No'を表示する -->
-  <div v-html="message"></div>
-  <!-- messageのHTMLを解釈して表示する -->
-  <a href="https://vuejs.org">Vue.js</a>
-  <!-- href属性にhttps://vuejs.orgを設定したリンクを表示する -->
-  <a :id="vueId" :href="vueURL">Vue.js-1</a>
-  <!-- vueIdをid属性、vueURLをhref属性に設定したリンクを表示する -->
-  <a :id="undefind" :href="false">Vue.js-2</a>
-  <!-- id属性をundefinedに、href属性をfalseに設定したリンクを表示する（実際にはリンクにならない） -->
-  <a v-bind="{ id: vueId, href: vueURL }">Vue.js-3</a>
-  <!-- vueIdをid属性、vueURLをhref属性に設定したリンクを表示する -->
-  <button :disable="''"></button>
-  <!-- 空文字列をdisable属性に設定したボタンを表示する（実際には無効化されない） -->
-  <p>{{ count3 }}</p>
-  <!-- count3の値を表示する -->
-  <button @click="count3++">button</button>
-  <!-- ボタンがクリックされるとcount3の値を1増やす -->
-  <p>{{ count4 }}</p>
-  <!-- count4の値を表示する -->
-  <button @click="countUp">button2</button>
-  <!-- ボタンがクリックされるとcountUp関数を実行する -->
-  <p>{{ count5 }}</p>
-  <!-- count5の値を表示する -->
-  <button @click="count5 = $event.clientX">button3</button>
-  <!-- ボタンがクリックされるとcount5の値をクリックしたX座標に設定する -->
-  <p>{{ count6 }}</p>
-  <!-- count6の値を表示する -->
-  <button @click="countUp2($event, 5)">button4</button>
-  <!-- ボタンがクリックされるとcountUp2関数を実行する -->
+  <div id="app">
+    <!-- テキストボックスに入力した内容が textInput の値に反映されます。 -->
+    <!-- @input イベントを使ってテキストボックスの入力内容が変更された際に textInput の値を更新します。 -->
+    <input :value="textInput" @input="textInput = $event.target.value" />
+    <!-- textInput の値を表示します。 -->
+    <p>{{ textInput }}</p>
+    <!-- textInput1 の値を表示します。 -->
+    <p v-text="textInput1"></p>
+
+    <!-- checkValue の値を表示します。 -->
+    <input v-model="checkValue" type="checkbox" />
+    <p>{{ checkValue }}</p>
+
+    <!-- checkValue1 の値を表示します。 -->
+    <input v-model="checkValue1" type="checkbox" true-value="はい" false-value="いいえ" />
+    <p>{{ checkValue1 }}</p>
+
+    <!-- checkValue2 の値を表示します。 -->
+    <input v-model="checkValue2" type="checkbox" value="ラグビー" /> ラグビー
+    <input v-model="checkValue2" type="checkbox" value="サッカー" /> サッカー
+    <input v-model="checkValue2" type="checkbox" value="バスケットボール" /> バスケットボール
+    <p>{{ checkValue2 }}</p>
+
+    <!-- checkValue2A の値を表示します。 -->
+    <input v-model="checkValue2A" type="checkbox" value="ラグビー" /> ラグビー
+    <input v-model="checkValue2A" type="checkbox" value="サッカー" /> サッカー
+    <input v-model="checkValue2A" type="checkbox" value="バスケットボール" /> バスケットボール
+    <p>{{ checkValue2A }}</p>
+
+    <!-- radioValue3 の値を表示します。 -->
+    <input v-model="radioValue3" type="radio" value="ラグビー" /> ラグビー
+    <input v-model="radioValue3" type="radio" value="サッカー" /> サッカー
+    <input v-model="radioValue3" type="radio" value="バスケットボール" /> バスケットボール
+    <p>{{ radioValue3 }}</p>
+
+    <!-- selectValue の値を表示します。 -->
+    <select v-model="selectValue">
+      <!-- 興味のあるスポーツを選択するセレクトボックスです。 -->
+      <option disabled value="">興味のあるスポーツを選択</option>
+      <option>ラグビー</option>
+      <option>サッカー</option>
+      <option>バスケットボール</option>
+    </select>
+    <p>{{ selectValue }}</p>
+
+    <!-- selectValues の値を表示します。 -->
+    <select v-model="selectValues" multiple="">
+      <!-- マルチセレクトボックスの選択肢です。 -->
+      <option>ラグビー</option>
+      <option>サッカー</option>
+      <option>バスケットボール</option>
+    </select>
+    <p>{{ selectValues }}</p>
+
+    <!-- ファイルをアップロードするための input 要素です。 -->
+    <!-- ファイルが選択されると handleFile メソッドが実行され、選択されたファイルの情報が fileData にセットされます。 -->
+    <div id="app">
+      <input type="file" @change="handleFile" />
+      <!-- 選択されたファイルの情報を表示します。 -->
+      {{ fileData }}
+    </div>
+  </div>
 </template>
