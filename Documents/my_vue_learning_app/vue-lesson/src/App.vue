@@ -1,96 +1,63 @@
-<!-- .vueファイルは単一コンポーネントと呼ばれ、以下のようなHTMLタグ（JavaScript、HTML、CSS）で構成されています。 -->
-
-<!-- <script setup>タグ: コンポーネントのセットアップを定義し、HTMLの属性のようなものを記述する必要があります。 -->
-
-<!-- template以外なくても表示される -->
-
-<!-- <script setup>で定義されたデータが更新された場合、画面も自動的に更新されます。 -->
 <script setup>
-// Vue.jsからrefをインポート
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 
-// 変数titleを定義し、初期値を'Vue.js Course'とする
-const title = ref('Vue.js Course')
+// refを使用して変数を定義
+const count = ref(2) // countという変数を定義し、初期値を2に設定する
+const count2 = ref(4) // count2という変数を定義し、初期値を4に設定する
+const count3 = ref(0) // count3という変数を定義し、初期値を0に設定する
+const count4 = ref(0) // count4という変数を定義し、初期値を0に設定する
+const count5 = ref(0) // count5という変数を定義し、初期値を0に設定する
+const count6 = ref(0) // count6という変数を定義し、初期値を0に設定する
 
-// 変数priceをrefでラップし、初期値を9.99とする
-// ラップ：オブジェクトを参照型に変換することで、Vueがリアクティブな変更を検出できるようにする
-// リアクティブ：変更があった際にそれを自動的に検知し、関連するビューを更新する仕組み
-let price = ref(9.99)
-
-// increment関数の定義：priceの値を1増やす
-function increment() {
-  price.value += 1
-  // instructorのageをインクリメントする
-  // インクリメントとは、数値を1つ増やす操作を指します。つまり、何かの値を「1つ増やす」という意味です。例えば、変数の値を1ずつ増やす場合、その変数をインクリメントすると言います。
-  instructor.age += 1
-  // instructorのsnsオブジェクト内のtwitterプロパティを変更する
-  // 「プロパティ」という言葉は、オブジェクト指向プログラミングにおいて、オブジェクトに属するデータや機能を指します。
-  // オブジェクトは、データ（プロパティ）とそのデータに関連する操作（メソッド）をまとめたもの
-  // 例えば、車のオブジェクトがある場合、その車の色やサイズ、重量などがプロパティとなります。
-  // プロパティは名前（キー）と値のペアで構成され、名前を使って値にアクセスしたり、値を変更したりすることができます。
-  instructor.sns.twitter = 'hello'
-  instructor.email = 'taro@test.com'
+// カウントアップの関数
+function countUp() {
+  count4.value++ // count4の値を1増やす
 }
 
-// infoというオブジェクトをrefでラップし、初期値をstudents: 1000, rating: 4とする
-const info = ref({
-  // 学生の数
-  students: 1000,
-  // 評価
-  rating: 4
-})
-// instructorオブジェクトをreactiveでラップし、リアクティブなオブジェクトにする
-const instructor = reactive({
-  // インストラクターの名前
-  name: 'sunao',
-  // インストラクターの年齢
-  age: 37,
-  // インストラクターのSNS情報
-  sns: {
-    // Twitterアカウント
-    twitter: '@_test_',
-    // YouTubeアカウント
-    youtube: '@test'
-  },
-  // instructorオブジェクトのemailプロパティをリアクティブな参照型で定義し、初期値を'test_sunao@test.com'とする
-  email: ref('test_sunao@test.com')
-})
-// courseInfoオブジェクトを定義し、リアクティブな参照型でsectionsとlanguageプロパティを持たせる
-const corseInfo = {
-  // コースのセクション数
-  sections: ref(10),
-  // コースの言語
-  lauguage: ref('Japanese')
+// イベントオブジェクトを受け取り、count6の値を更新する関数
+function countUp2(event, times) {
+  count6.value = event.clientX * times // イベントのX座標と引数の値(times)を掛けた結果でcount6の値を更新する
 }
-// コースのセクション数をコンソールに出力する
-console.log(corseInfo.sections.value)
-// infoのstudentsプロパティの値をコンソールに出力する
-console.log(info.value.students)
-// instructorオブジェクトのnameをコンソールに出力する
-console.log(instructor.name)
-// instructorオブジェクトのageをコンソールに出力する
-console.log(instructor.age)
-// instructorオブジェクトのemailプロパティをコンソールに出力する
-console.log(instructor.email)
+
+// メッセージ、Vue.jsのURL、IDを定義
+const message = ref('<h1>Hello</h1>') // messageという変数を定義し、初期値を'<h1>Hello</h1>'に設定する
+const vueURL = ref('https://vuejs.org') // vueURLという変数を定義し、初期値を'https://vuejs.org'に設定する
+const vueId = ref('vue-link') // vueIdという変数を定義し、初期値を'vue-link'に設定する
 </script>
 
 <template>
-  <!-- 変数titleを表示する -->
-  <h1>Title: {{ title }}</h1>
-  <!-- priceの値を表示し、1を引いた値を表示する -->
-  <h2>Price: ${{ price - 1 }}</h2>
-  <!-- ボタンがクリックされたときにincrement関数を実行する -->
-  <button @click="increment">button</button>
-  <!-- infoのstudentsプロパティの値を表示する -->
-  <h2>Students: {{ info.students }}</h2>
-  <!-- instructorのnameを表示する -->
-  <h2>Instructor: {{ instructor.name }}</h2>
-  <!-- instructorのageを表示する -->
-  <h2>Instructor-age: {{ instructor.age }}</h2>
-  <!-- instructorのsnsオブジェクト内のtwitterプロパティを表示する -->
-  <h2>Instructor-sns-twitter: {{ instructor.sns.twitter }}</h2>
-  <!-- instructorのemailプロパティを表示する -->
-  <h2>Instructor-email: {{ instructor.email }}</h2>
-  <!-- courseInfoオブジェクトのsectionsプロパティの値を表示する -->
-  <h2>Course-info-Sections: {{ corseInfo.sections.value }}</h2>
+  <div>{{ count + count2 }}</div>
+  <!-- countとcount2の値を足して表示する -->
+  <div v-text="count"></div>
+  <!-- countの値を表示する -->
+  <div>{{ count > 3 ? 'Yes' : 'No' }}</div>
+  <!-- countの値が3より大きい場合は'Yes'、そうでない場合は'No'を表示する -->
+  <div v-html="message"></div>
+  <!-- messageのHTMLを解釈して表示する -->
+  <a href="https://vuejs.org">Vue.js</a>
+  <!-- href属性にhttps://vuejs.orgを設定したリンクを表示する -->
+  <a :id="vueId" :href="vueURL">Vue.js-1</a>
+  <!-- vueIdをid属性、vueURLをhref属性に設定したリンクを表示する -->
+  <a :id="undefind" :href="false">Vue.js-2</a>
+  <!-- id属性をundefinedに、href属性をfalseに設定したリンクを表示する（実際にはリンクにならない） -->
+  <a v-bind="{ id: vueId, href: vueURL }">Vue.js-3</a>
+  <!-- vueIdをid属性、vueURLをhref属性に設定したリンクを表示する -->
+  <button :disable="''"></button>
+  <!-- 空文字列をdisable属性に設定したボタンを表示する（実際には無効化されない） -->
+  <p>{{ count3 }}</p>
+  <!-- count3の値を表示する -->
+  <button @click="count3++">button</button>
+  <!-- ボタンがクリックされるとcount3の値を1増やす -->
+  <p>{{ count4 }}</p>
+  <!-- count4の値を表示する -->
+  <button @click="countUp">button2</button>
+  <!-- ボタンがクリックされるとcountUp関数を実行する -->
+  <p>{{ count5 }}</p>
+  <!-- count5の値を表示する -->
+  <button @click="count5 = $event.clientX">button3</button>
+  <!-- ボタンがクリックされるとcount5の値をクリックしたX座標に設定する -->
+  <p>{{ count6 }}</p>
+  <!-- count6の値を表示する -->
+  <button @click="countUp2($event, 5)">button4</button>
+  <!-- ボタンがクリックされるとcountUp2関数を実行する -->
 </template>
